@@ -13,14 +13,45 @@ async function main() {
         console.log("Connected correctly");
 
         const db = client.db(databaseName);
-        let result; 
+        // let result; 
         // Regular find one returns the First one 
         try{
-             result = await db.collection("users").findOne({
-                name: "Tejiri",
-                age: 25
+
+            await db.collection("tasks").updateMany({
+                completed: false,
+            }, {
+                $set: {
+                    completed: "true"
+                }
+            }).then((result) => {
+                return console.log(result);
+            }).catch((err) => {
+                return console.log("Unable to Update Data" , err)
             });
-            // const result = await db.collection("users").insertMany([
+           
+
+            // await db.collection("users").updateOne({
+            //     _id: new mongodb.ObjectId("68055a3a45779ec336d9dea6")
+            // }, {
+            //     $set: {
+            //         name: "Charles"
+            //     }
+            // }).then((result) => {
+            //     return console.log(result);
+            // }).catch((err) => {
+            //     return console.log("Unable to Update Data" , err)
+            // });
+           
+
+             //Api for adding one item
+             // const result = await db.collection("users").insertOne({
+            //     name: "Tejiri",
+            //     age: 25
+            // });
+
+            //Api for adding multiple items 
+
+            // const result = await db.collection("tasks").insertMany([
             //     {
             //         description: "Clean the house",
             //         completed: true,
@@ -34,13 +65,23 @@ async function main() {
             //         completed: false,
             //     },
             // ]);
+
+            //Api for finding one items
+            //  result = await db.collection("users").findOne({
+            //     name: "Tejiri",
+            //     age: 25
+            // });
+
+            //Api for finding all items
+            // const result = await db.collection("users").find({age: 25}).toArray();
+
         } catch(err) {
-            return console.log("Unable to Store Data" , err)
+            return console.log("Unable to Update Data" , err)
         }
        
-      console.log("Data Stored correctly");
+      console.log("Data Updated correctly");
       // const db = client.db(databaseName);
-  console.log(result);
+  
 //   console.log(result.insertedId);
 
     } catch (err) {
